@@ -5,15 +5,7 @@ from .models import PrettyQRConfig
 
 PRESETS = {
     "telegram_like": {
-        "cell_fill_ratio": 0.8,
-        "rounding_ratio": 0.48,
-        "gradient_start": "#C15AC4",
-        "gradient_end": "#5298F2",
-        "gradient_mode": "diagonal",
-    },
-    "soft_minimal": {
-        "cell_fill_ratio": 0.72,
-        "rounding_ratio": 0.38,
+
     },
 }
 

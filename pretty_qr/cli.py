@@ -48,6 +48,7 @@ def main() -> None:
         logo_scale=args.logo_scale,
         oversample=args.oversample,
         preset=args.preset,
+
     )
 
 

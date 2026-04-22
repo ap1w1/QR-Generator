@@ -44,30 +44,16 @@ def is_in_finder(x: int, y: int, n: int) -> bool:
 
 
 def is_timing(x: int, y: int, n: int) -> bool:
-    return ((y == 6 and 8 <= x < n - 8) or (x == 6 and 8 <= y < n - 8))
+
 
 
 def function_module_mask(matrix: list[list[bool]]) -> list[list[bool]]:
     n = len(matrix)
-    mask = [[False] * n for _ in range(n)]
-    for y in range(n):
-        for x in range(n):
-            if is_in_finder(x, y, n) or is_timing(x, y, n):
-                mask[y][x] = True
-    # format info around finders
+
     for i in range(9):
         if i != 6:
             mask[8][i] = True
             mask[i][8] = True
             mask[8][n - 1 - i] = True
             mask[n - 1 - i][8] = True
-    # dark module
-    if n > 8:
-        mask[n - 8][8] = True
-    return mask
 
-
-def alignment_centers(version: int) -> list[int]:
-    if version == 1:
-        return []
-    return qrcode.util.pattern_position(version)

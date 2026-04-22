@@ -21,11 +21,7 @@ def generate_pretty_qr(
     background_color: str = "#FFFFFF",
     error_correction: str = "H",
     margin_modules: int = 4,
-    cell_fill_ratio: float = 0.78,
-    rounding_ratio: float = 0.46,
-    logo_scale: float = 0.15,
-    oversample: int = 3,
-    preset: str | None = "telegram_like",
+
 ) -> Image.Image:
     config = PrettyQRConfig(
         data=data,
@@ -42,6 +38,7 @@ def generate_pretty_qr(
         logo_scale=logo_scale,
         oversample=oversample,
         preset=preset,
+
     )
     config = apply_preset(config)
     image = PrettyQRRenderer().render(config)

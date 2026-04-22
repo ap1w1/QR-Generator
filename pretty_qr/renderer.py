@@ -1,11 +1,6 @@
 from __future__ import annotations
 
-from PIL import Image, ImageDraw, ImageFilter
 
-from .generator import alignment_centers, build_qr_matrix, function_module_mask
-from .gradients import gradient_t, lerp_color, to_rgb
-from .models import PrettyQRConfig
-from .patterns import draw_alignment, draw_finder
 
 
 class PrettyQRRenderer:
@@ -24,36 +19,7 @@ class PrettyQRRenderer:
         draw = ImageDraw.Draw(mask)
         function_mask = function_module_mask(matrix)
 
-        base_r = (cell * config.cell_fill_ratio) * config.rounding_ratio
-        for y in range(n):
-            for x in range(n):
-                if not matrix[y][x] or function_mask[y][x]:
-                    continue
-                cx = offset + x * cell
-                cy = offset + y * cell
-                inset = (cell * (1 - config.cell_fill_ratio)) / 2
-                draw.rounded_rectangle(
-                    (cx + inset, cy + inset, cx + cell - inset, cy + cell - inset),
-                    radius=base_r,
-                    fill=255,
-                )
 
-        finder_size = cell * 7
-        draw_finder(draw, offset, offset, finder_size, 255)
-        draw_finder(draw, offset + (n - 7) * cell, offset, finder_size, 255)
-        draw_finder(draw, offset, offset + (n - 7) * cell, finder_size, 255)
-
-        version = (n - 21) // 4 + 1
-        centers = alignment_centers(version)
-        for cy in centers:
-            for cx in centers:
-                # skip overlaps with finders
-                if (cx < 9 and cy < 9) or (cx > n - 10 and cy < 9) or (cx < 9 and cy > n - 10):
-                    continue
-                draw_alignment(draw, offset + (cx - 2) * cell, offset + (cy - 2) * cell, 5 * cell, 255)
-
-        mask = mask.filter(ImageFilter.GaussianBlur(radius=max(0.8, 0.95 * scale)))
-        mask = mask.point(lambda p: 255 if p > 90 else 0)
 
         bg = Image.new("RGB", (size, size), to_rgb(config.background_color))
         px = bg.load()
@@ -69,5 +35,4 @@ class PrettyQRRenderer:
                     t = config.gradient_fn(t)
                 px[x, y] = lerp_color(c1, c2, t)
 
-        result = bg.resize((config.size, config.size), Image.Resampling.LANCZOS)
-        return result
+
