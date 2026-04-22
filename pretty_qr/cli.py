@@ -23,7 +23,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--oversample", type=int, default=3)
     parser.add_argument("--no-logo", action="store_true")
     parser.add_argument("--no-gradient", action="store_true")
-    parser.add_argument("--unsafe-style", action="store_true", help="allow more aggressive style at the cost of scan reliability")
     return parser
 
 
@@ -49,7 +48,7 @@ def main() -> None:
         logo_scale=args.logo_scale,
         oversample=args.oversample,
         preset=args.preset,
-        scan_safe_mode=not args.unsafe_style,
+
     )
 
 
